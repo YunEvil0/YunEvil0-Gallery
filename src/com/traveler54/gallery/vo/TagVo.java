@@ -1,10 +1,13 @@
 package com.traveler54.gallery.vo;
 
-public class ImageBisInfoTagVo {
+import org.mongodb.morphia.annotations.Entity;
+
+@Entity(noClassnameStored=true)
+public class TagVo {
 	private String tagContent;
 	private String tagType;
 
-	public ImageBisInfoTagVo() {
+	public TagVo() {
 		super();
 	}
 

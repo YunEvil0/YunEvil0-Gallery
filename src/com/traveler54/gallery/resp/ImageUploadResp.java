@@ -8,7 +8,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import com.alibaba.fastjson.JSON;
 import com.traveler54.common.server.resp.Resp;
-import com.traveler54.gallery.vo.CommonFile;
+import com.traveler54.gallery.dto.CommonFileDTO;
 
 /**
  * 
@@ -21,7 +21,7 @@ public class ImageUploadResp extends Resp {
 	public long costTime;
 	private String result;
 	private String errorMessage;
-	private List<CommonFile> fileList;
+	private List<CommonFileDTO> fileList;
 
 	public ImageUploadResp() {
 
@@ -62,11 +62,11 @@ public class ImageUploadResp extends Resp {
 		this.result = result;
 	}
 
-	public List<CommonFile> getFileList() {
+	public List<CommonFileDTO> getFileList() {
 		return fileList;
 	}
 
-	public void setFileList(List<CommonFile> fileList) {
+	public void setFileList(List<CommonFileDTO> fileList) {
 		this.fileList = fileList;
 	}
 

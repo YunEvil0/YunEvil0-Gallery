@@ -12,6 +12,11 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.impl.cookie.DateUtils;
 
+import com.traveler54.gallery.constant.GalleryConstant;
+import com.traveler54.gallery.dto.CommonFileDTO;
+import com.traveler54.gallery.dto.FileAttrBaseDTO;
+import com.traveler54.gallery.dto.FileAttrCommonDTO;
+import com.traveler54.gallery.dto.FileAttrImageDTO;
 import com.traveler54.gallery.exception.BisException;
 import com.traveler54.gallery.service.ImageUploadService;
 import com.traveler54.util.ImageUtil;
@@ -71,7 +76,7 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 
 	}
 
-	public CommonFile makeFile() {
+	public CommonFileDTO makeFile() {
 		String fileName = Long.toHexString(System.currentTimeMillis()) + "." + this.extName;
 		
 		
@@ -95,22 +100,33 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 		
 		ImageUtil imageUtil = new ImageUtil();
 		if (this.isImage) {
-			ImageFile cfile = new ImageFile();
-			cfile.height = imageUtil.getImageHeight(this.bi);
-			cfile.width = imageUtil.getImageWidth(this.bi);
+			
+			CommonFileDTO cfile = new CommonFileDTO();
+			
+			FileAttrImageDTO fileAttr = new FileAttrImageDTO();
+			fileAttr.setHeight(imageUtil.getImageHeight(this.bi));
+			fileAttr.setWidth(imageUtil.getImageWidth(this.bi));
+			fileAttr.setApplicationType(GalleryConstant.FILE_APPLICATION_TYPE.IMAGE.toString());
+			fileAttr.setSuffix(this.extName.toUpperCase());
+			fileAttr.setSize(this.bytes.length);
 
+			cfile.setFileAttr(fileAttr);
 			cfile.setFileMD5(DigestUtils.md5Hex(this.bytes));
 			cfile.setMsg("SUCCESS");
 			cfile.setOssName(fileName);
-			cfile.setSize(this.bytes.length);
 			cfile.setFilePath(filePath);
+			
 			return cfile;
 		} else {
-			CommonFile cfile = new CommonFile();
+			CommonFileDTO cfile = new CommonFileDTO();
+			FileAttrCommonDTO fileAttr = new FileAttrCommonDTO();
+			fileAttr.setApplicationType(GalleryConstant.FILE_APPLICATION_TYPE.DOCUMENT.toString());
+			fileAttr.setSuffix(this.extName.toUpperCase());
+			fileAttr.setSize(this.bytes.length);
+			
 			cfile.setFileMD5(DigestUtils.md5Hex(this.bytes));
 			cfile.setMsg("SUCCESS");
 			cfile.setOssName(fileName);
-			cfile.setSize(this.bytes.length);
 			cfile.setFilePath(filePath);
 			return cfile;
 		}

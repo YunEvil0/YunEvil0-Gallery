@@ -1,40 +1,39 @@
-package com.traveler54.gallery.vo;
+package com.traveler54.gallery.dto;
 
-import java.util.List;
-
+import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.NotSaved;
+import org.mongodb.morphia.annotations.Transient;
 
-@Entity("StorgeFile")
-public class CommonFile {
+@Entity(value="StorgeFile")
+public class CommonFileDTO {
 	private static final long serialVersionUID = -269949918665231386L;
 
 	@Id
 	private String fileMD5;
+	@Transient
 	private String ossName;
 	private String filePath;
-	private int size;
-	private List<ImageBisInfoTagVo> tagList;
+	@Embedded
+	private BisAttrDTO bisAttr;
+	@Embedded
+	private FileAttrBaseDTO fileAttr;
 	@NotSaved
 	private String msg;
 
-	public CommonFile() {
-		super();
+	public CommonFileDTO() {
 	}
-	
-	public CommonFile(String ossName, String filePath,
-			String fileMD5, int size) {
+
+	public CommonFileDTO(String ossName, String filePath, String fileMD5,
+			int size) {
 		super();
 		this.ossName = ossName;
 		this.filePath = filePath;
 		this.fileMD5 = fileMD5;
-		this.size = size;
 	}
 
-
-
-	public CommonFile(String msg) {
+	public CommonFileDTO(String msg) {
 		this.msg = msg;
 	}
 
@@ -52,14 +51,6 @@ public class CommonFile {
 
 	public void setFileMD5(String fileMD5) {
 		this.fileMD5 = fileMD5;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
 	}
 
 	public String getMsg() {
@@ -82,12 +73,20 @@ public class CommonFile {
 		this.ossName = ossName;
 	}
 
-	public List<ImageBisInfoTagVo> getTagList() {
-		return tagList;
+	public BisAttrDTO getBisAttr() {
+		return bisAttr;
 	}
 
-	public void setTagList(List<ImageBisInfoTagVo> tagList) {
-		this.tagList = tagList;
+	public void setBisAttr(BisAttrDTO bisAttr) {
+		this.bisAttr = bisAttr;
+	}
+
+	public FileAttrBaseDTO getFileAttr() {
+		return fileAttr;
+	}
+
+	public void setFileAttr(FileAttrBaseDTO fileAttr) {
+		this.fileAttr = fileAttr;
 	}
 
 }

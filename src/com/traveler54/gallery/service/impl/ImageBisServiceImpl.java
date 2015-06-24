@@ -8,33 +8,34 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 
+import com.traveler54.gallery.dto.CommonFileDTO;
 import com.traveler54.gallery.service.ImageBisService;
-import com.traveler54.gallery.vo.CommonFile;
-import com.traveler54.gallery.vo.ImageBisInfoVo;
+import com.traveler54.gallery.vo.InfoVo;
 import com.traveler54.mongo.MongoUtil;
 
 public class ImageBisServiceImpl implements ImageBisService{
 
 	@Override
-	public void fillUp(List<ImageBisInfoVo> bisInfoList) {
+	public void fillUp(List<InfoVo> bisInfoList) {
 		if(bisInfoList == null || bisInfoList.size() == 0){
 			return;
 		}
-		
-		for(ImageBisInfoVo vo:bisInfoList){
+	
+		for(InfoVo vo:bisInfoList){
 			this.fillUp(vo);
 		}
+		
 	}
 
 	@Override
-	public void fillUp(List<ImageBisInfoVo> bisInfoList,List<CommonFile> fileList) {
+	public void fillUp(List<InfoVo> bisInfoList,List<CommonFileDTO> fileList) {
 		if(bisInfoList == null || bisInfoList.size() < 1){
 			return;
 		}
 		int infoSize = bisInfoList.size();
 		for(int index=0;index<fileList.size() && index <= infoSize;index++){
-			CommonFile cfile = fileList.get(index);
-			ImageBisInfoVo infoVo = bisInfoList.get(index);
+			CommonFileDTO cfile = fileList.get(index);
+			InfoVo infoVo = bisInfoList.get(index);
 			if(infoVo == null){
 				continue;
 			}
@@ -46,7 +47,7 @@ public class ImageBisServiceImpl implements ImageBisService{
 	}
 
 	@Override
-	public void fillUp(ImageBisInfoVo bisInfo) {
+	public boolean fillUp(InfoVo bisInfo) {
 		MongoUtil mongoUtil = null;
 		try {
 			mongoUtil = MongoUtil.getInstance();
@@ -54,15 +55,30 @@ public class ImageBisServiceImpl implements ImageBisService{
 			e.printStackTrace();
 		}
 		if(mongoUtil == null){
-			return;
+			return false;
 		}
 		Datastore ds = mongoUtil.getDS();
 		if(ds == null){
-			return;
+			return false;
 		}
-		Query<CommonFile> query = ds.createQuery(CommonFile.class).field("fileMD5").equal(bisInfo.getFileMd5());
-		UpdateOperations<CommonFile> ops = ds.createUpdateOperations(CommonFile.class).addAll("tagList",bisInfo.getTagList(),false);
+		Query<CommonFileDTO> query = ds.createQuery(CommonFileDTO.class).field("fileMD5").equal(bisInfo.getFileMd5());
+		UpdateOperations<CommonFileDTO> ops = ds.createUpdateOperations(CommonFileDTO.class)
+				.addAll("bisAttr.tagList",bisInfo.getTagList(),false)
+				.set("bisAttr.title", bisInfo.getTitle());
 		UpdateResults update = ds.update(query, ops);
+		return true;
+	}
+
+	@Override
+	public void createIndex(String fileMd5) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateIndex(String fileMd5) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

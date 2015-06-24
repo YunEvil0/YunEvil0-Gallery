@@ -2,14 +2,18 @@ package com.traveler54.gallery.service;
 
 import java.util.List;
 
-import com.traveler54.gallery.vo.CommonFile;
-import com.traveler54.gallery.vo.ImageBisInfoVo;
+import com.traveler54.gallery.dto.CommonFileDTO;
+import com.traveler54.gallery.vo.InfoVo;
 
 public interface ImageBisService {
 
-	public void fillUp(List<ImageBisInfoVo> bisInfoList);
+	public void fillUp(List<InfoVo> bisInfoList);
 
-	public void fillUp(List<ImageBisInfoVo> bisInfoList,List<CommonFile> fileList);
+	public void fillUp(List<InfoVo> bisInfoList,List<CommonFileDTO> fileList);
 	
-	public void fillUp(ImageBisInfoVo bisInfo);
+	public boolean fillUp(InfoVo bisInfo);
+	
+	public void createIndex(String fileMd5);
+	
+	public void updateIndex(String fileMd5);
 }

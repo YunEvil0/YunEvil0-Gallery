@@ -19,9 +19,11 @@ import com.traveler54.common.Config;
 import com.traveler54.common.server.BaseNioServer;
 import com.traveler54.common.server.RestChannelHandler;
 import com.traveler54.common.server.ServerAddress;
+import com.traveler54.gallery.handler.BisHandler;
 import com.traveler54.gallery.handler.ImageReadHandler;
 import com.traveler54.gallery.handler.UploadHandler;
 import com.traveler54.gallery.vo.UploadFileStrategyFactory;
+import com.traveler54.taskQueue.core.PoolPullThread;
 
 public class ImageServer extends BaseNioServer {
 	
@@ -36,6 +38,11 @@ public class ImageServer extends BaseNioServer {
 		ImageReadHandler readHandler = new ImageReadHandler();
 		restHandler.registerHandler(HttpMethod.OPTIONS, "images/{method_name}", readHandler);
 		restHandler.registerHandler(HttpMethod.GET, "images/{method_name}", readHandler);
+
+		BisHandler bisHandler = new BisHandler();
+		restHandler.registerHandler(HttpMethod.OPTIONS, "bis/{method_name}", bisHandler);
+		restHandler.registerHandler(HttpMethod.GET, "bis/{method_name}", bisHandler);
+		restHandler.registerHandler(HttpMethod.POST, "bis/{method_name}", bisHandler);
 		
 	}
 	
@@ -118,6 +125,11 @@ public class ImageServer extends BaseNioServer {
 		o.start();
 		
 		UploadFileStrategyFactory.getInstance().addStrategy(content.toString());
+		
+		for(int i=0;i<1;i++){
+        	Thread poolPullThread = new Thread(new PoolPullThread(), "DT"+i);
+        	poolPullThread.start();
+        }
 	}
 
 }

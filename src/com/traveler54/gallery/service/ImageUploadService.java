@@ -22,9 +22,9 @@ import com.alibaba.fastjson.JSON;
 import com.traveler54.common.Config;
 import com.traveler54.common.server.NettyHttpRequest;
 import com.traveler54.gallery.action.NettyUploader;
+import com.traveler54.gallery.dto.CommonFileDTO;
 import com.traveler54.gallery.exception.BisException;
 import com.traveler54.gallery.resp.ImageUploadResp;
-import com.traveler54.gallery.vo.CommonFile;
 import com.traveler54.gallery.vo.UploadFileStrategyBaseVo;
 import com.traveler54.gallery.vo.UploadFileStrategyFactory;
 import com.traveler54.gallery.vo.UploadFileStrategyVo;
@@ -89,24 +89,24 @@ public class ImageUploadService {
 			uploader.setFileSizeMax(strategyVo.getFileSizeMax());//指定单个上传文件的最大尺寸  10M
 			uploader.setSizeMax(strategyVo.getSizeMax());//指定一次上传多个文件的总尺寸  100M
 			FileItemIterator iterator = uploader.getItemIterator("UTF-8",httpRequest.getHeader("Content-Type"), -1);
-			List<CommonFile> cfileList=new ArrayList<CommonFile>();
+			List<CommonFileDTO> cfileList=new ArrayList<CommonFileDTO>();
 			while (iterator.hasNext()) {
 				
 				FileItemStream fileItem = iterator.next();
 				InputStream fins = fileItem.openStream();
 				String fileName = fileItem.getName();
 				if(fileName == null){
-					cfileList.add(new CommonFile("FILENAME_NULL"));
+					cfileList.add(new CommonFileDTO("FILENAME_NULL"));
 				}else if(fins == null){
-					cfileList.add(new CommonFile("FILESTREAM_NULL"));
+					cfileList.add(new CommonFileDTO("FILESTREAM_NULL"));
 				}else{
 					strategyVo.checkStrategy(fileItem, fins);
-					CommonFile cfile = strategyVo.makeFile();
+					CommonFileDTO cfile = strategyVo.makeFile();
 					String md5Code = cfile.getFileMD5();
 					
 					Datastore ds = MongoUtil.getInstance().getDS();
-					Query<CommonFile> query = ds.find(CommonFile.class).field("fileMD5").equal(md5Code);
-					CommonFile existFile = query.get();
+					Query<CommonFileDTO> query = ds.find(CommonFileDTO.class).field("fileMD5").equal(md5Code);
+					CommonFileDTO existFile = query.get();
 					if(existFile != null){
 						cfile = existFile;
 					}else{
@@ -115,7 +115,7 @@ public class ImageUploadService {
 						fos.flush();
 						fos.close();
 						fos=null;
-						ds.getCollection(CommonFile.class).save(MongoUtil.getInstance().getMorphia().toDBObject(cfile));
+						ds.getCollection(CommonFileDTO.class).save(MongoUtil.getInstance().getMorphia().toDBObject(cfile));
 					}
 					
 					cfileList.add(cfile);

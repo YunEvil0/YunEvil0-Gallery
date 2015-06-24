@@ -2,13 +2,13 @@ package com.traveler54.gallery.vo;
 
 import java.util.List;
 
-public class ImageBisInfoVo {
+public class InfoVo {
 
 	private String fileMd5;
 	private String title;
-	private List<ImageBisInfoTagVo> tagList;
+	private List<TagVo> tagList;
 
-	public ImageBisInfoVo() {
+	public InfoVo() {
 		super();
 	}
 
@@ -20,11 +20,11 @@ public class ImageBisInfoVo {
 		this.title = title;
 	}
 
-	public List<ImageBisInfoTagVo> getTagList() {
+	public List<TagVo> getTagList() {
 		return tagList;
 	}
 
-	public void setTagList(List<ImageBisInfoTagVo> tagList) {
+	public void setTagList(List<TagVo> tagList) {
 		this.tagList = tagList;
 	}
 
