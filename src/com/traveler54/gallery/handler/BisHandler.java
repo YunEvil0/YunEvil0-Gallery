@@ -1,18 +1,18 @@
 package com.traveler54.gallery.handler;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.jboss.netty.handler.codec.http.HttpMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.traveler54.common.server.Handler;
 import com.traveler54.common.server.NettyHttpRequest;
+import com.traveler54.gallery.queue.OssFileTask;
+import com.traveler54.gallery.queue.OssFileTaskServiceImpl;
 import com.traveler54.gallery.resp.BisResp;
 import com.traveler54.gallery.service.ImageBisService;
 import com.traveler54.gallery.service.impl.ImageBisServiceImpl;
 import com.traveler54.gallery.vo.InfoVo;
+import com.traveler54.taskQueue.service.ITaskService;
 import com.traveler54.util.CostTime;
 
 public class BisHandler implements Handler{
@@ -37,11 +37,20 @@ public class BisHandler implements Handler{
 			if(StringUtils.isBlank(reqbody)){
 				return new BisResp("PARAM_NULL", null,(short)404);
 			}
-			/*
+			
+			InfoVo infoVo = JSON.parseObject(reqbody, InfoVo.class);
+			
+			resp = new BisResp();
+			resp.setResult(this.bisService.fillUp(infoVo));
+			resp.respCode = 400;
+			break;
+		case "fillUpBatch.do":
+			if(StringUtils.isBlank(reqbody)){
+				return new BisResp("PARAM_NULL", null,(short)404);
+			}
 			ITaskService taskService = new OssFileTaskServiceImpl();
 			taskService.addTask(new OssFileTask(JSON.parseArray(reqbody, InfoVo.class)));
-			*/
-			
+			/*
 			List<InfoVo> infoList = JSON.parseArray(reqbody, InfoVo.class);
 			List<String> fillUpFaild = new ArrayList<String>();
 			for(InfoVo vo:infoList){
@@ -49,9 +58,9 @@ public class BisHandler implements Handler{
 				if(!fillUp){
 					fillUpFaild.add(vo.getFileMd5());
 				}
-			}
+			}*/
 			resp = new BisResp();
-			resp.setResult(fillUpFaild);
+			resp.setResult(true);
 			resp.respCode = 400;
 			break;
 		default:

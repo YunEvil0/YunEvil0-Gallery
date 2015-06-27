@@ -125,11 +125,14 @@ public class ImageServer extends BaseNioServer {
 		o.start();
 		
 		UploadFileStrategyFactory.getInstance().addStrategy(content.toString());
-		
+
+		/*
 		for(int i=0;i<1;i++){
         	Thread poolPullThread = new Thread(new PoolPullThread(), "DT"+i);
         	poolPullThread.start();
         }
+        */
+		
 	}
 
 }

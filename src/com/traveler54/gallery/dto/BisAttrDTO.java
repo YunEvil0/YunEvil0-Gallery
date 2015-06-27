@@ -9,12 +9,12 @@ import com.traveler54.gallery.vo.TagVo;
 @Embedded
 public class BisAttrDTO {
 
-	private String title;
-	private String source;
-	private String uploader;
-	private String owner;
-	private String permission;
-	private String copyright;
+	private String title;//图片标题
+	private String uploader;//上传者
+	private String source;//来源？什么意思 我忘了
+	private String owner;//版权所属
+	private String permission;//访问权限private or public
+	private String copyright;//版权开放信息
 	private List<TagVo> tagList;
 
 	public BisAttrDTO() {

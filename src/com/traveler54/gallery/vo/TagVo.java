@@ -2,9 +2,10 @@ package com.traveler54.gallery.vo;
 
 import org.mongodb.morphia.annotations.Entity;
 
-@Entity(noClassnameStored=true)
+@Entity(noClassnameStored = true)
 public class TagVo {
 	private String tagContent;
+	private String tagFrom;
 	private String tagType;
 
 	public TagVo() {
@@ -25,6 +26,14 @@ public class TagVo {
 
 	public void setTagType(String tagType) {
 		this.tagType = tagType;
+	}
+
+	public String getTagFrom() {
+		return tagFrom;
+	}
+
+	public void setTagFrom(String tagFrom) {
+		this.tagFrom = tagFrom;
 	}
 
 }

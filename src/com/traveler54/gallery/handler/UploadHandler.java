@@ -26,8 +26,6 @@ public class UploadHandler implements Handler{
 			ImageUploadService action=new ImageUploadService();
 			resp=action.doAction(nettyRequest);
 			resp.getFileList();
-			
-			
 			break;
 		default:
 			return new ImageUploadResp("no this index:" + method, 400);

@@ -8,6 +8,7 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 
+import com.traveler54.gallery.dto.BisAttrDTO;
 import com.traveler54.gallery.dto.CommonFileDTO;
 import com.traveler54.gallery.service.ImageBisService;
 import com.traveler54.gallery.vo.InfoVo;
@@ -61,10 +62,22 @@ public class ImageBisServiceImpl implements ImageBisService{
 		if(ds == null){
 			return false;
 		}
+		
+		/*
+		BisAttrDTO bisAttr = new BisAttrDTO();
+		bisAttr.setCopyright(bisInfo.getCopyright());
+		bisAttr.setOwner(bisInfo.getOwner());
+		bisAttr.setPermission(bisInfo.getPermission());
+		bisAttr.setSource(bisInfo.getSource());
+		bisAttr.setTitle(bisInfo.getTitle());
+		bisAttr.setUploader(bisInfo.getUploader());
+		bisAttr.setTagList(bisInfo.getTagList());
+		*/
+		
 		Query<CommonFileDTO> query = ds.createQuery(CommonFileDTO.class).field("fileMD5").equal(bisInfo.getFileMd5());
 		UpdateOperations<CommonFileDTO> ops = ds.createUpdateOperations(CommonFileDTO.class)
-				.addAll("bisAttr.tagList",bisInfo.getTagList(),false)
-				.set("bisAttr.title", bisInfo.getTitle());
+//				.addAll("bisAttr.tagList",bisInfo.getTagList(),false)
+				.set("bisAttr", bisInfo.getAttr());
 		UpdateResults update = ds.update(query, ops);
 		return true;
 	}
