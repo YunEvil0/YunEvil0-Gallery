@@ -9,9 +9,9 @@ import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import org.mongodb.morphia.query.UpdateResults;
 
-import com.traveler54.gallery.dto.CommonFileDTO;
-import com.traveler54.gallery.vo.TagVo;
-import com.traveler54.mongo.MongoUtil;
+import com.xxx.gallery.dto.CommonFileDTO;
+import com.xxx.gallery.vo.TagVo;
+import com.xxx.mongo.MongoUtil;
 
 public class test2 {
 
