@@ -42,7 +42,7 @@ public class BisHandler implements Handler{
 			
 			resp = new BisResp();
 			resp.setResult(this.bisService.fillUp(infoVo));
-			resp.respCode = 400;
+			resp.respCode = 200;
 			break;
 		case "fillUpBatch.do":
 			if(StringUtils.isBlank(reqbody)){
@@ -61,7 +61,7 @@ public class BisHandler implements Handler{
 			}*/
 			resp = new BisResp();
 			resp.setResult(true);
-			resp.respCode = 400;
+			resp.respCode = 200;
 			break;
 		default:
 			return new BisResp("no this index:" + method, false,(short) 404);
