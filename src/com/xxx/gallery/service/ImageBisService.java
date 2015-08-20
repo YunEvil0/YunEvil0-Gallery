@@ -16,4 +16,6 @@ public interface ImageBisService {
 	public void createIndex(String fileMd5);
 	
 	public void updateIndex(String fileMd5);
+	
+	public void readExif(String fileMd5);
 }

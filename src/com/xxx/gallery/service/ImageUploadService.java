@@ -76,6 +76,7 @@ public class ImageUploadService {
 	private ImageUploadResp processImage(NettyHttpRequest nettyRequest){
 		HttpRequest httpRequest=nettyRequest.getRequest();
 		String group = nettyRequest.param("group");
+		String filepath = nettyRequest.param("xxx");
 		
 		UploadFileStrategyBaseVo strategyBaseVo = UploadFileStrategyFactory.getInstance().getStrategy(group);
 		UploadFileStrategyVo strategyVo = JSON.parseObject(JSON.toJSONString(strategyBaseVo), UploadFileStrategyVo.class);
@@ -101,7 +102,10 @@ public class ImageUploadService {
 					cfileList.add(new CommonFileDTO("FILESTREAM_NULL"));
 				}else{
 					strategyVo.checkStrategy(fileItem, fins);
+					strategyVo.setFilepath(filepath);
 					CommonFileDTO cfile = strategyVo.makeFile();
+					cfile.setGroup(group);
+					
 					String md5Code = cfile.getFileMD5();
 					
 					Datastore ds = MongoUtil.getInstance().getDS();

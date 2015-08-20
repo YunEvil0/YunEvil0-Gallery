@@ -33,6 +33,7 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 	private String extName;
 	private InputStream is;
 	private BufferedImage bi;
+	private String filepath;
 
 	public UploadFileStrategyVo() {
 
@@ -46,25 +47,24 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 		this.extName = imageUtil.getFileExtName(fileItem.getName());
 
 		if (!imageUtil.isAvailableExtName(this.getSuffix(), this.extName)) {
-			throw new BisException("FILE EXT NAME IS NOT " + this.getSuffix());
+			//throw new BisException("FILE EXT NAME IS NOT " + this.getSuffix());
 		}
 		// 2.file strean head check
 		this.bytes = IOUtils.toByteArray(fins);
 
 		if (!imageUtil
 				.isAvailableFileType(this.bytes, this.getFileTypePreFix())) {
-			throw new BisException("FILE FORMAT IS NOT "
-					+ this.getFileTypePreFix());
+			//throw new BisException("FILE FORMAT IS NOT "+ this.getFileTypePreFix());
 		}
 
 		// 3. file type check
 		this.is = new ByteArrayInputStream(this.bytes);
 		this.bi = imageUtil.isImage(this.is);
-		
+
 		if (this.bi != null) {
 			this.isImage = true;
 		}
-		
+
 		if (this.getFileType() != null) {
 			switch (this.getFileType()) {
 			case "images":
@@ -77,36 +77,44 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 	}
 
 	public CommonFileDTO makeFile() {
-		String fileName = Long.toHexString(System.currentTimeMillis()) + "." + this.extName;
-		
-		
+		String fileName = Long.toHexString(System.currentTimeMillis()) + "."
+				+ this.extName;
+
 		StringBuffer filePathSb = new StringBuffer();
-		if(this.isImage){
+		if (this.isImage) {
 			filePathSb.append("images");
-		}else{
+		} else {
 			filePathSb.append(this.extName);
 		}
-		
-		filePathSb.append(File.separator).append(DateUtils.formatDate(new Date(), "yyyyMM")).append(File.separator);
+		if (filepath == null) {
+			filePathSb.append(File.separator)
+					.append(DateUtils.formatDate(new Date(), "yyyyMM"))
+					.append(File.separator);
+		} else {
+			filePathSb.append(File.separator).append(filepath)
+					.append(File.separator);
+		}
 		String filePath = filePathSb.toString();
-		File folder = new File(ImageUploadService.ROOT_PATH+filePath);
-		if(!folder.exists()){
+		File folder = new File(ImageUploadService.ROOT_PATH + filePath);
+		if (!folder.exists()) {
 			folder.mkdirs();
 		}
-		
-		filePathSb.append(this.getFilePrefix() == null ? "" : this.getFilePrefix())
-		.append(fileName);
+
+		filePathSb.append(
+				this.getFilePrefix() == null ? "" : this.getFilePrefix())
+				.append(fileName);
 		filePath = filePathSb.toString();
-		
+
 		ImageUtil imageUtil = new ImageUtil();
 		if (this.isImage) {
-			
+
 			CommonFileDTO cfile = new CommonFileDTO();
-			
+
 			FileAttrImageDTO fileAttr = new FileAttrImageDTO();
 			fileAttr.setHeight(imageUtil.getImageHeight(this.bi));
 			fileAttr.setWidth(imageUtil.getImageWidth(this.bi));
-			fileAttr.setApplicationType(GalleryConstant.FILE_APPLICATION_TYPE.IMAGE.toString());
+			fileAttr.setApplicationType(GalleryConstant.FILE_APPLICATION_TYPE.IMAGE
+					.toString());
 			fileAttr.setSuffix(this.extName.toUpperCase());
 			fileAttr.setSize(this.bytes.length);
 
@@ -115,15 +123,16 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 			cfile.setMsg("SUCCESS");
 			cfile.setOssName(fileName);
 			cfile.setFilePath(filePath);
-			
+
 			return cfile;
 		} else {
 			CommonFileDTO cfile = new CommonFileDTO();
 			FileAttrCommonDTO fileAttr = new FileAttrCommonDTO();
-			fileAttr.setApplicationType(GalleryConstant.FILE_APPLICATION_TYPE.DOCUMENT.toString());
+			fileAttr.setApplicationType(GalleryConstant.FILE_APPLICATION_TYPE.DOCUMENT
+					.toString());
 			fileAttr.setSuffix(this.extName.toUpperCase());
 			fileAttr.setSize(this.bytes.length);
-			
+
 			cfile.setFileMD5(DigestUtils.md5Hex(this.bytes));
 			cfile.setMsg("SUCCESS");
 			cfile.setOssName(fileName);
@@ -142,6 +151,14 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 
 	public String getExtName() {
 		return extName;
+	}
+
+	public String getFilepath() {
+		return filepath;
+	}
+
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
 	}
 
 }

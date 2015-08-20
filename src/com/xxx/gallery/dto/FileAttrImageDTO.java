@@ -1,5 +1,7 @@
 package com.xxx.gallery.dto;
 
+import java.util.Map;
+
 import org.mongodb.morphia.annotations.Embedded;
 
 /**
@@ -13,6 +15,7 @@ public class FileAttrImageDTO extends FileAttrBaseDTO {
 
 	private int width;
 	private int height;
+	private Map<String, String> exif;
 
 	public FileAttrImageDTO() {
 		super();
@@ -32,6 +35,14 @@ public class FileAttrImageDTO extends FileAttrBaseDTO {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	public Map<String, String> getExif() {
+		return exif;
+	}
+
+	public void setExif(Map<String, String> exif) {
+		this.exif = exif;
 	}
 
 }

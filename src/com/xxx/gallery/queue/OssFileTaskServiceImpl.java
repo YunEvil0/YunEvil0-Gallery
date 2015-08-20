@@ -14,6 +14,7 @@ public class OssFileTaskServiceImpl extends TaskBaseServiceImpl implements ITask
 
 	@Override
 	public BaseTaskResult doTask(BaseTask task) {
+		System.out.println("[OssFileTaskServiceImpl]START");
 		if(!(task instanceof OssFileTask)){
 			return null;
 		}
@@ -21,6 +22,7 @@ public class OssFileTaskServiceImpl extends TaskBaseServiceImpl implements ITask
 		List<InfoVo> bisInfoList = ossTask.getBisInfoList();
 		ImageBisService bisService = new ImageBisServiceImpl();
 		bisService.fillUp(bisInfoList);
+		System.out.println("[OssFileTaskServiceImpl]END");
 		return null;
 	}
 

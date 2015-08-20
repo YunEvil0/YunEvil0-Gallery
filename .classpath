@@ -34,10 +34,23 @@
 	<classpathentry kind="lib" path="lib/servlet-api-2.5.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.1.jar"/>
 	<classpathentry kind="lib" path="lib/bson-3.0.2.jar"/>
-	<classpathentry kind="lib" path="lib/java_memcached-release_2.6.6.jar"/>
 	<classpathentry kind="lib" path="lib/mongo-java-driver-3.0.2.jar"/>
 	<classpathentry kind="lib" path="lib/morphia-1.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/es.jar"/>
-	<classpathentry kind="lib" path="lib/exiftool-lib-1.2.jar"/>
+	<classpathentry kind="lib" path="lib/metadata-extractor-2.8.1.jar"/>
+	<classpathentry kind="lib" path="lib/xmpcore-5.1.2.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/elasticsearch-1.6.0.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-analyzers-common-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-core-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-expressions-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-grouping-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-highlighter-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-join-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-memory-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-misc-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-queries-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-queryparser-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-sandbox-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-spatial-4.10.4.jar"/>
+	<classpathentry kind="lib" path="/Data/Dev/elasticsearch/lib/lucene-suggest-4.10.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

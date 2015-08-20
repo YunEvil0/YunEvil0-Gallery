@@ -6,6 +6,8 @@ import org.jboss.netty.handler.codec.http.HttpMethod;
 import com.alibaba.fastjson.JSON;
 import com.xxx.common.server.Handler;
 import com.xxx.common.server.NettyHttpRequest;
+import com.xxx.gallery.queue.IndexTask;
+import com.xxx.gallery.queue.IndexTaskServiceImpl;
 import com.xxx.gallery.queue.OssFileTask;
 import com.xxx.gallery.queue.OssFileTaskServiceImpl;
 import com.xxx.gallery.resp.BisResp;
@@ -43,25 +45,12 @@ public class BisHandler implements Handler{
 			resp = new BisResp();
 			resp.setResult(this.bisService.fillUp(infoVo));
 			resp.respCode = 200;
-			break;
-		case "fillUpBatch.do":
-			if(StringUtils.isBlank(reqbody)){
-				return new BisResp("PARAM_NULL", null,(short)404);
-			}
+
 			ITaskService taskService = new OssFileTaskServiceImpl();
-			taskService.addTask(new OssFileTask(JSON.parseArray(reqbody, InfoVo.class)));
-			/*
-			List<InfoVo> infoList = JSON.parseArray(reqbody, InfoVo.class);
-			List<String> fillUpFaild = new ArrayList<String>();
-			for(InfoVo vo:infoList){
-				boolean fillUp = this.bisService.fillUp(vo);
-				if(!fillUp){
-					fillUpFaild.add(vo.getFileMd5());
-				}
-			}*/
-			resp = new BisResp();
-			resp.setResult(true);
-			resp.respCode = 200;
+			taskService.addTask(new OssFileTask(infoVo));
+			
+			taskService = new IndexTaskServiceImpl();
+			taskService.addTask(new IndexTask(infoVo.getFileMd5()));
 			break;
 		default:
 			return new BisResp("no this index:" + method, false,(short) 404);

@@ -11,7 +11,9 @@ public class IndexTask extends BaseTask{
 	}
 
 	public IndexTask(String fileMd5) {
+		super();
 		this.fileMd5 = fileMd5;
+		this.taskService = new IndexTaskServiceImpl();
 	}
 
 	public String getFileMd5() {

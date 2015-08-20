@@ -12,9 +12,9 @@ public class CommonFileDTO {
 
 	@Id
 	private String fileMD5;
-	@Transient
 	private String ossName;
 	private String filePath;
+	private String group;
 	@Embedded
 	private BisAttrDTO bisAttr;
 	@Embedded
@@ -88,5 +88,14 @@ public class CommonFileDTO {
 	public void setFileAttr(FileAttrBaseDTO fileAttr) {
 		this.fileAttr = fileAttr;
 	}
+
+	public String getGroup() {
+		return group;
+	}
+
+	public void setGroup(String group) {
+		this.group = group;
+	}
+	
 
 }

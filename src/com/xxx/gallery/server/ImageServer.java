@@ -32,17 +32,17 @@ public class ImageServer extends BaseNioServer {
 	private void registerHandler() {
 		restHandler = new RestChannelHandler();
 		UploadHandler uploadHandler=new UploadHandler();
-		restHandler.registerHandler(HttpMethod.OPTIONS, "imageUploadApi/{method_name}", uploadHandler);
-		restHandler.registerHandler(HttpMethod.POST, "imageUploadApi/{method_name}", uploadHandler);
+		restHandler.registerHandler(HttpMethod.OPTIONS, "galleryApi/imageUploadApi/{method_name}", uploadHandler);
+		restHandler.registerHandler(HttpMethod.POST, "galleryApi/imageUploadApi/{method_name}", uploadHandler);
 		
 		ImageReadHandler readHandler = new ImageReadHandler();
-		restHandler.registerHandler(HttpMethod.OPTIONS, "images/{method_name}", readHandler);
-		restHandler.registerHandler(HttpMethod.GET, "images/{method_name}", readHandler);
+		restHandler.registerHandler(HttpMethod.OPTIONS, "galleryApi/images/{method_name}", readHandler);
+		restHandler.registerHandler(HttpMethod.GET, "galleryApi/images/{method_name}", readHandler);
 
 		BisHandler bisHandler = new BisHandler();
-		restHandler.registerHandler(HttpMethod.OPTIONS, "bis/{method_name}", bisHandler);
-		restHandler.registerHandler(HttpMethod.GET, "bis/{method_name}", bisHandler);
-		restHandler.registerHandler(HttpMethod.POST, "bis/{method_name}", bisHandler);
+		restHandler.registerHandler(HttpMethod.OPTIONS, "galleryApi/bis/{method_name}", bisHandler);
+		restHandler.registerHandler(HttpMethod.GET, "galleryApi/bis/{method_name}", bisHandler);
+		restHandler.registerHandler(HttpMethod.POST, "galleryApi/bis/{method_name}", bisHandler);
 		
 	}
 	
@@ -126,12 +126,10 @@ public class ImageServer extends BaseNioServer {
 		
 		UploadFileStrategyFactory.getInstance().addStrategy(content.toString());
 
-		/*
 		for(int i=0;i<1;i++){
         	Thread poolPullThread = new Thread(new PoolPullThread(), "DT"+i);
         	poolPullThread.start();
         }
-        */
 		
 	}
 

@@ -1,15 +1,5 @@
 [
 	{
-		"name":"54work",
-		"filePath":"",
-		"filetype":"file",
-		"filePrefix":"54W",
-		"fileSizeMax":104857600,
-		"sizeMax":104857600,
-		"fileTypePreFix":["FFD8FF","89504E47","47494638","255044462D312E"],
-		"needWaterMark":false,
-		"suffix":["png","jpg","gif","pdf","doc"]
-	},{
 		"name":"54gallery",
 		"filePath":"",
 		"filetype":"images",
@@ -19,5 +9,15 @@
 		"fileTypePreFix":["FFD8FF","89504E47","47494638"],
 		"needWaterMark":false,
 		"suffix":["png","jpg"]
+	},{
+		"name":"54private",
+		"filePath":"54private",
+		"filetype":"file",
+		"filePrefix":"54PRIVATE",
+		"fileSizeMax":104857600,
+		"sizeMax":104857600,
+		"fileTypePreFix":["FFD8FF","89504E47","47494638","255044462D312E"],
+		"needWaterMark":false,
+		"suffix":["png","jpg","gif","pdf","doc"]
 	}
 ]

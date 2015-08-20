@@ -25,7 +25,11 @@ public class PoolPullThread implements Runnable {
 				}
 
 			} else {
-				System.out.println("queue is empty");
+				try {
+					Thread.sleep(1000*10);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 
 		}
