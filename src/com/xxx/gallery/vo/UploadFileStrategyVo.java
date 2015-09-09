@@ -14,7 +14,6 @@ import org.apache.http.impl.cookie.DateUtils;
 
 import com.xxx.gallery.constant.GalleryConstant;
 import com.xxx.gallery.dto.CommonFileDTO;
-import com.xxx.gallery.dto.FileAttrBaseDTO;
 import com.xxx.gallery.dto.FileAttrCommonDTO;
 import com.xxx.gallery.dto.FileAttrImageDTO;
 import com.xxx.gallery.exception.BisException;
@@ -39,22 +38,27 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 
 	}
 
-	public void checkStrategy(FileItemStream fileItem, InputStream fins)
-			throws BisException, IOException {
+	public void checkStrategy(FileItemStream fileItem, InputStream fins) throws BisException{
 		// 1.file ext name check
 		ImageUtil imageUtil = new ImageUtil();
 
 		this.extName = imageUtil.getFileExtName(fileItem.getName());
 
 		if (!imageUtil.isAvailableExtName(this.getSuffix(), this.extName)) {
-			//throw new BisException("FILE EXT NAME IS NOT " + this.getSuffix());
+//			throw new BisException("FILE_EXT_NAME IS NOT " + this.getSuffix());
+			throw new BisException("FILE_EXT_NAME");
 		}
 		// 2.file strean head check
-		this.bytes = IOUtils.toByteArray(fins);
+		try {
+			this.bytes = IOUtils.toByteArray(fins);
+		} catch (IOException e) {
+			throw new BisException("FILE_SIZE");
+		}
 
 		if (!imageUtil
 				.isAvailableFileType(this.bytes, this.getFileTypePreFix())) {
-			//throw new BisException("FILE FORMAT IS NOT "+ this.getFileTypePreFix());
+//			throw new BisException("FILE_FORMAT IS NOT "+ this.getFileTypePreFix());
+			throw new BisException("FILE_FORMAT");
 		}
 
 		// 3. file type check
@@ -68,7 +72,7 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 		if (this.getFileType() != null) {
 			switch (this.getFileType()) {
 			case "images":
-				throw new BisException("FILE IS NOT IMAGE");
+				throw new BisException("FILE_IS_NOT_IMAGE");
 			case "file":
 				break;
 			}
@@ -77,8 +81,7 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 	}
 
 	public CommonFileDTO makeFile() {
-		String fileName = Long.toHexString(System.currentTimeMillis()) + "."
-				+ this.extName;
+		String fileName = Long.toHexString(System.currentTimeMillis()) + "."+ this.extName;
 
 		StringBuffer filePathSb = new StringBuffer();
 		if (this.isImage) {
@@ -100,8 +103,7 @@ public class UploadFileStrategyVo extends UploadFileStrategyBaseVo {
 			folder.mkdirs();
 		}
 
-		filePathSb.append(
-				this.getFilePrefix() == null ? "" : this.getFilePrefix())
+		filePathSb.append(this.getFilePrefix() == null ? "" : this.getFilePrefix())
 				.append(fileName);
 		filePath = filePathSb.toString();
 

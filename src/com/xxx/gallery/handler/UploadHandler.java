@@ -31,12 +31,14 @@ public class UploadHandler implements Handler{
 		case "uploadFile.do":
 			ImageUploadService action=new ImageUploadService();
 			resp=action.doAction(nettyRequest);
-			for(CommonFileDTO cfile : resp.getFileList()){
-				ITaskService taskService = new ExifTaskServiceImpl();
-				taskService.addTask(new ExifFileTask(cfile.getFileMD5()));
-				
-				taskService = new IndexTaskServiceImpl();
-				taskService.addTask(new IndexTask(cfile.getFileMD5()));
+			if(resp.getFileList() != null){
+				for(CommonFileDTO cfile : resp.getFileList()){
+					ITaskService taskService = new ExifTaskServiceImpl();
+					taskService.addTask(new ExifFileTask(cfile.getFileMD5()));
+					
+					taskService = new IndexTaskServiceImpl();
+					taskService.addTask(new IndexTask(cfile.getFileMD5()));
+				}
 			}
 			break;
 		default:
@@ -45,7 +47,6 @@ public class UploadHandler implements Handler{
 
 		resp.costTime=cst.cost();
 		return resp;
-		
 	}
 
 	

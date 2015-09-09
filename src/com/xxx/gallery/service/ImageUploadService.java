@@ -50,7 +50,6 @@ public class ImageUploadService {
 		if(!httpRequest.isChunked()){
 			return this.processImage(nettyRequest);
 		}else{
-//			log.error("Request is chunked!");
 			return new ImageUploadResp("Request is chunked", HttpResponseStatus.BAD_REQUEST.getCode());
 		}
 	}
@@ -103,7 +102,9 @@ public class ImageUploadService {
 				}else{
 					strategyVo.checkStrategy(fileItem, fins);
 					strategyVo.setFilepath(filepath);
+					
 					CommonFileDTO cfile = strategyVo.makeFile();
+					
 					cfile.setGroup(group);
 					
 					String md5Code = cfile.getFileMD5();
@@ -135,6 +136,14 @@ public class ImageUploadService {
 			ex.printStackTrace();
 			return new ImageUploadResp(HttpResponseStatus.BAD_REQUEST.getReasonPhrase(), HttpResponseStatus.BAD_REQUEST.getCode());
 		}catch(BisException e){
+			switch(e.getMessage()){
+			case "FILE_SIZE":
+				return new ImageUploadResp(e.getMessage(), HttpResponseStatus.REQUEST_ENTITY_TOO_LARGE.getCode());
+			case "FILE_EXT_NAME":
+			case "FILE_FORMAT":
+			case "FILE_IS_NOT_IMAGE":
+				return new ImageUploadResp(e.getMessage(), HttpResponseStatus.UNSUPPORTED_MEDIA_TYPE.getCode());
+			}
 			return new ImageUploadResp(e.getMessage(), HttpResponseStatus.BAD_REQUEST.getCode());
 		}catch(Exception e){
 			e.printStackTrace();

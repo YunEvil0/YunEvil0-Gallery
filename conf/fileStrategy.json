@@ -8,7 +8,7 @@
 		"sizeMax":1048576,
 		"fileTypePreFix":["FFD8FF","89504E47","47494638"],
 		"needWaterMark":false,
-		"suffix":["png","jpg"]
+		"suffix":["png","jpg","gif","jpeg"]
 	},{
 		"name":"54private",
 		"filePath":"54private",
