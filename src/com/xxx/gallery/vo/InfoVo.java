@@ -13,7 +13,8 @@ public class InfoVo {
 	private String permission;// 访问权限private or public
 	private String copyright;// 版权开放信息
 	private List<TagVo> tagList;
-	private Map<String, Object> attr;
+
+	private Map<String, Object> attrJson;
 
 	public InfoVo() {
 		super();
@@ -83,12 +84,12 @@ public class InfoVo {
 		this.copyright = copyright;
 	}
 
-	public Map<String, Object> getAttr() {
-		return attr;
+	public Map<String, Object> getAttrJson() {
+		return attrJson;
 	}
 
-	public void setAttr(Map<String, Object> attr) {
-		this.attr = attr;
+	public void setAttrJson(Map<String, Object> attrJson) {
+		this.attrJson = attrJson;
 	}
 
 }

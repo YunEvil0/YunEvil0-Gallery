@@ -1,19 +1,20 @@
-package com.xxx.gallery.queue;
+package com.xxx.gallery.queue.vo;
 
+import com.xxx.gallery.queue.impl.IndexTaskServiceImpl;
 import com.xxx.taskQueue.vo.BaseTask;
 
-public class ExifFileTask extends BaseTask {
+public class IndexTask extends BaseTask{
 
 	private String fileMd5;
 
-	public ExifFileTask() {
+	public IndexTask() {
 		super();
 	}
 
-	public ExifFileTask(String fileMd5) {
+	public IndexTask(String fileMd5) {
 		super();
 		this.fileMd5 = fileMd5;
-		this.taskService = new ExifTaskServiceImpl();
+		this.taskService = new IndexTaskServiceImpl();
 	}
 
 	public String getFileMd5() {

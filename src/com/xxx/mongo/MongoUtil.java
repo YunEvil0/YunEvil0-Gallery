@@ -42,6 +42,11 @@ public class MongoUtil {
 		}
 		if (ds == null) {
 
+			/*
+			ServerAddress sa= new ServerAddress(Config.get().get("mongoServer"));
+			MongoClient client = new MongoClient(sa);
+			ds = morphia.createDatastore(client, "oss");
+			*/
 			MongoCredential credit = MongoCredential.createCredential("xiaoyu", "oss", "Autobot_0317".toCharArray());
 			ServerAddress sa= new ServerAddress(Config.get().get("mongoServer"));
 			MongoClient client = new MongoClient(sa,Arrays.asList(credit));

@@ -5,13 +5,19 @@ import com.xxx.taskQueue.service.ITaskService;
 public abstract class BaseTask {
 
 	protected ITaskService taskService;
+	protected String taskId;
 
 	public BaseTask() {
-		super();
+		this.taskId = System.currentTimeMillis() + "-"
+				+ Thread.currentThread().getId();
 	}
 
 	public ITaskService getTaskService() {
 		return taskService;
+	}
+
+	public String getTaskId() {
+		return taskId;
 	}
 
 }

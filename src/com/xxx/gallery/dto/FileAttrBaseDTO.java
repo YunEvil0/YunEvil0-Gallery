@@ -3,7 +3,7 @@ package com.xxx.gallery.dto;
 import org.mongodb.morphia.annotations.Embedded;
 
 @Embedded
-public abstract class FileAttrBaseDTO {
+public class FileAttrBaseDTO {
 
 	private int size;
 	private String suffix;

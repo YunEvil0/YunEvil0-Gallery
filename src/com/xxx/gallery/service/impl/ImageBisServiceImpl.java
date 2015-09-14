@@ -28,6 +28,7 @@ import com.drew.metadata.Tag;
 import com.drew.metadata.exif.ExifReader;
 import com.drew.metadata.exif.GpsDirectory;
 import com.xxx.common.Config;
+import com.xxx.gallery.dto.BisAttrDTO;
 import com.xxx.gallery.dto.CommonFileDTO;
 import com.xxx.gallery.service.ImageBisService;
 import com.xxx.gallery.vo.InfoVo;
@@ -82,7 +83,6 @@ public class ImageBisServiceImpl implements ImageBisService{
 			return false;
 		}
 		
-		/*
 		BisAttrDTO bisAttr = new BisAttrDTO();
 		bisAttr.setCopyright(bisInfo.getCopyright());
 		bisAttr.setOwner(bisInfo.getOwner());
@@ -91,12 +91,11 @@ public class ImageBisServiceImpl implements ImageBisService{
 		bisAttr.setTitle(bisInfo.getTitle());
 		bisAttr.setUploader(bisInfo.getUploader());
 		bisAttr.setTagList(bisInfo.getTagList());
-		*/
 		
 		Query<CommonFileDTO> query = ds.createQuery(CommonFileDTO.class).field("fileMD5").equal(bisInfo.getFileMd5());
 		UpdateOperations<CommonFileDTO> ops = ds.createUpdateOperations(CommonFileDTO.class)
-//				.addAll("bisAttr.tagList",bisInfo.getTagList(),false)
-				.set("bisAttr", bisInfo.getAttr());
+//				.addAll("bisAttr.tagList",bisAttr.getTagList(),false)
+				.set("bisAttr",bisInfo.getAttrJson());//用map好处就是不用修改java字段
 		UpdateResults update = ds.update(query, ops);
 		return true;
 	}

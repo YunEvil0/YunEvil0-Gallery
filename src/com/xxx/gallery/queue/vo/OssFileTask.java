@@ -1,8 +1,9 @@
-package com.xxx.gallery.queue;
+package com.xxx.gallery.queue.vo;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.xxx.gallery.queue.impl.OssFileTaskServiceImpl;
 import com.xxx.gallery.vo.InfoVo;
 import com.xxx.taskQueue.vo.BaseTask;
 

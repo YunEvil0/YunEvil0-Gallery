@@ -1,7 +1,8 @@
-package com.xxx.gallery.queue;
+package com.xxx.gallery.queue.impl;
 
 import java.util.List;
 
+import com.xxx.gallery.queue.vo.OssFileTask;
 import com.xxx.gallery.service.ImageBisService;
 import com.xxx.gallery.service.impl.ImageBisServiceImpl;
 import com.xxx.gallery.vo.InfoVo;
