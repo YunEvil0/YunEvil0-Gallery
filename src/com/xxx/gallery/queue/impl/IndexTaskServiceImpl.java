@@ -32,7 +32,7 @@ public class IndexTaskServiceImpl extends TaskBaseServiceImpl implements ITaskSe
 			Datastore ds = MongoUtil.getInstance().getDS();
 			Query<CommonFileDTO> query = ds.find(CommonFileDTO.class).field("fileMD5").equal(indexTask.getFileMd5());
 			CommonFileDTO file = query.get();
-			
+			System.out.println(JSON.toJSONString(file));
 			IndexResponse indexResp = client.prepareIndex("ossfile", file.getGroup(),file.getFileMD5()).setSource(JSON.toJSONString(file)).execute().actionGet();
 			System.out.println(JSON.toJSONString(indexResp));
 		} catch (UnknownHostException e) {

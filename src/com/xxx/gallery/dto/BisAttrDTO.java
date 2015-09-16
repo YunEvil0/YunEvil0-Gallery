@@ -15,6 +15,8 @@ public class BisAttrDTO {
 	private String owner;//版权所属
 	private String permission;//访问权限private or public
 	private String copyright;//版权开放信息
+	private String forumThreadId;
+	private String forumPostId;
 	private List<TagVo> tagList;
 
 	public BisAttrDTO() {
@@ -77,4 +79,21 @@ public class BisAttrDTO {
 		this.tagList = tagList;
 	}
 
+	public String getForumThreadId() {
+		return forumThreadId;
+	}
+
+	public void setForumThreadId(String forumThreadId) {
+		this.forumThreadId = forumThreadId;
+	}
+
+	public String getForumPostId() {
+		return forumPostId;
+	}
+
+	public void setForumPostId(String forumPostId) {
+		this.forumPostId = forumPostId;
+	}
+
+	
 }

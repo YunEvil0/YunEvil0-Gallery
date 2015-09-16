@@ -4,13 +4,13 @@ import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.NotSaved;
-import org.mongodb.morphia.annotations.Transient;
 
-@Entity(value="StorgeFile")
+@Entity(value = "StorgeFile")
 public class CommonFileDTO {
 	private static final long serialVersionUID = -269949918665231386L;
 
 	@Id
+	private String _id;
 	private String fileMD5;
 	private String ossName;
 	private String filePath;
@@ -96,6 +96,13 @@ public class CommonFileDTO {
 	public void setGroup(String group) {
 		this.group = group;
 	}
-	
+
+	public String get_id() {
+		return _id;
+	}
+
+	public void set_id(String _id) {
+		this._id = _id;
+	}
 
 }

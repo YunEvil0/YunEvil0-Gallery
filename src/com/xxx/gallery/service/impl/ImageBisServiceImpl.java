@@ -32,6 +32,7 @@ import com.xxx.gallery.dto.BisAttrDTO;
 import com.xxx.gallery.dto.CommonFileDTO;
 import com.xxx.gallery.service.ImageBisService;
 import com.xxx.gallery.vo.InfoVo;
+import com.xxx.gallery.vo.TagVo;
 import com.xxx.mongo.MongoUtil;
 
 public class ImageBisServiceImpl implements ImageBisService{
@@ -180,6 +181,30 @@ public class ImageBisServiceImpl implements ImageBisService{
 		UpdateOperations<CommonFileDTO> ops = ds.createUpdateOperations(CommonFileDTO.class).disableValidation()
 				.set("fileAttr.exif", exifMap);
 		UpdateResults update = ds.update(query, ops);
+	}
+
+	@Override
+	public boolean appendTag(String fileMd5, List<TagVo> tagList) {
+		MongoUtil mongoUtil = null;
+		try {
+			mongoUtil = MongoUtil.getInstance();
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		if(mongoUtil == null){
+			return false;
+		}
+		Datastore ds = mongoUtil.getDS();
+		if(ds == null){
+			return false;
+		}
+		
+		Query<CommonFileDTO> query = ds.createQuery(CommonFileDTO.class).field("fileMD5").equal(fileMd5);
+		UpdateOperations<CommonFileDTO> ops = ds.createUpdateOperations(CommonFileDTO.class)
+				.addAll("bisAttr.tagList",tagList,false);
+//				.set("bisAttr",bisInfo.getAttrJson());//用map好处就是不用修改java字段
+		UpdateResults update = ds.update(query, ops);
+		return true;
 	}
 	
 

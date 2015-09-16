@@ -33,6 +33,9 @@ public class UploadHandler implements Handler{
 			resp=action.doAction(nettyRequest);
 			if(resp.getFileList() != null){
 				for(CommonFileDTO cfile : resp.getFileList()){
+					if(cfile.getFileMD5() == null){
+						continue;
+					}
 					ITaskService taskService = new ExifTaskServiceImpl();
 					taskService.addTask(new ExifFileTask(cfile.getFileMD5()));
 					
